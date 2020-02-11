@@ -21,10 +21,10 @@ MonoBehaviour:
     y: 30
     width: 1536
     height: 734
-  m_MinSize: {x: 677, y: 321}
-  m_MaxSize: {x: 12002, y: 8021}
+  m_MinSize: {x: 677, y: 342}
+  m_MaxSize: {x: 12002, y: 8042}
   vertical: 0
-  controlID: 24351
+  controlID: 15377
 --- !u!114 &2
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -135,10 +135,10 @@ MonoBehaviour:
     y: 0
     width: 1225
     height: 734
-  m_MinSize: {x: 402, y: 321}
-  m_MaxSize: {x: 8002, y: 8021}
+  m_MinSize: {x: 402, y: 342}
+  m_MaxSize: {x: 8002, y: 8042}
   vertical: 1
-  controlID: 24352
+  controlID: 15378
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -163,7 +163,7 @@ MonoBehaviour:
   m_MinSize: {x: 402, y: 221}
   m_MaxSize: {x: 8002, y: 4021}
   vertical: 0
-  controlID: 24353
+  controlID: 15354
 --- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -221,7 +221,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: e4c2feff1ac4feff9e35ffff28540000aa540000
+      m_ExpandedIDs: 72fbffff42330000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -309,9 +309,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -0.6581516, y: 0.65890133, z: -1.7809134}
+    m_Target: {x: -4.851355, y: 1.6230514, z: 0.21744692}
     speed: 2
-    m_Value: {x: -0.6581516, y: 0.65890133, z: -1.7809134}
+    m_Value: {x: -4.851355, y: 1.6230514, z: 0.21744692}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -357,9 +357,9 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: -0.035466783, y: -0.96286196, z: 0.21613179, w: -0.15794608}
+    m_Target: {x: -0.035930376, y: -0.73170394, z: 0.038670275, w: -0.6795938}
     speed: 2
-    m_Value: {x: -0.03546641, y: -0.9628519, z: 0.21612953, w: -0.15794443}
+    m_Value: {x: -0.03592993, y: -0.7316949, z: 0.038669795, w: -0.6795854}
   m_Size:
     m_Target: 7.266554
     speed: 2
@@ -433,8 +433,8 @@ MonoBehaviour:
     y: 444
     width: 1225
     height: 290
-  m_MinSize: {x: 100, y: 100}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 101, y: 121}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 12}
   m_Panes:
   - {fileID: 11}
@@ -480,20 +480,20 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets
+    - Assets/Materials
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets
+  - Assets/Materials
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\Arek\Prace\OpenRace\OpenRace
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 00550000
-    m_LastClickedID: 21760
-    m_ExpandedIDs: 000000000055000000ca9a3b
+    m_SelectedIDs: 90340000
+    m_LastClickedID: 13456
+    m_ExpandedIDs: 000000003a34000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -521,7 +521,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000000055000000ca9a3b
+    m_ExpandedIDs: 000000003a34000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -665,5 +665,5 @@ MonoBehaviour:
     m_ControlHash: -371814159
     m_PrefName: Preview_InspectorPreview
   m_PreviewWindow: {fileID: 0}
-  m_LastInspectedObjectInstanceID: 44280
+  m_LastInspectedObjectInstanceID: -1
   m_LastVerticalScrollValue: 0

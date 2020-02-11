@@ -10,8 +10,6 @@ namespace OpenRace.Car {
         public Transform fwheelR;
         public Transform fwheelL;
 
-        public Transform backsteer;
-
         public Rigidbody body;
 
         public Text text;
@@ -23,6 +21,10 @@ namespace OpenRace.Car {
         float to100Time = 0;
 
         float steeringAngle = 30f;
+
+        [Header("Aerodynamics")]
+        public float coefficientOfAirResistance = 0.4f;
+        public float frontalSurfaceOfTheCar = 2.5f;
 
         private void FixedUpdate() {
 
@@ -48,10 +50,20 @@ namespace OpenRace.Car {
 
         void Wheel(Transform wheel) {
             if(isGrounded(wheel)) {
-                if(body.velocity.magnitude * 3.6f < maxSpeed) {
+
+                float speed = body.velocity.magnitude * 3.6f;
+
+                if(speed < maxSpeed) {
+
+                    float pp = 0.0048f * coefficientOfAirResistance * frontalSurfaceOfTheCar * (speed * speed);
+                    print(pp);
+
+                    float ppMultiplier = pp / 1000f;
+                    if(ppMultiplier < 1)
+                        ppMultiplier = 1;
 
                     body.AddForceAtPosition(
-                        body.transform.forward * 400000f * Input.GetAxis("Vertical") * Time.deltaTime,
+                        body.transform.forward * 400000f * Input.GetAxis("Vertical") * Time.deltaTime * ppMultiplier,
                         new Vector3(wheel.position.x, 0, wheel.position.z)
                     );
                 }
@@ -60,27 +72,7 @@ namespace OpenRace.Car {
 
         void Turn(Transform left, Transform right) {
 
-            Vector3 forceVector = Vector3.zero;
-            bool forceVectorBool = false;
-
-            bool leftIsGrounded = isGrounded(left);
-            bool rightIsGrounded = isGrounded(right);
-
-            if(leftIsGrounded && rightIsGrounded) {
-                forceVector = Vector3.Lerp(left.position, right.position, 0.5f);
-                forceVectorBool = true;
-
-            } else if(leftIsGrounded) {
-                forceVector = left.position;
-                forceVectorBool = true;
-
-            } else if(rightIsGrounded) {
-                forceVector = right.position;
-                forceVectorBool = true;
-
-            }
-            if(true) {
-            //if(forceVectorBool) {
+            if(isGrounded(left) && isGrounded(right)) {
                 float angle = Input.GetAxis("Horizontal") * steeringAngle;
 
                 left.localEulerAngles = new Vector3(
@@ -94,24 +86,16 @@ namespace OpenRace.Car {
                     right.localEulerAngles.z
                 );
 
-                float turn = Mathf.Lerp(angle * 8000 * Time.deltaTime, 0, body.velocity.magnitude / maxSpeed / 3f);
-
-                /*body.AddForceAtPosition(
-                    transform.right * turn,
-                    forceVector
-                );
-
-                body.AddForceAtPosition(
-                    -transform.right * turn,
-                    backsteer.position
-                );*/
+                float turn = Mathf.Lerp(angle * 8000, 0, body.velocity.magnitude / maxSpeed / 3f);
 
                 body.MoveRotation(Quaternion.Euler(
                     body.transform.rotation.eulerAngles.x,
-                    body.transform.rotation.eulerAngles.y + (turn/1000f),
+                    body.transform.rotation.eulerAngles.y + (turn / 5000f * Time.deltaTime),
                     body.transform.rotation.eulerAngles.z
                 ));
-                //body.MoveRotation(Quaternion.Euler(transform.right));
+
+                if(body.velocity.magnitude * 3.6f > 15f)
+                    body.velocity = transform.forward * body.velocity.magnitude;
             }
         }
 
