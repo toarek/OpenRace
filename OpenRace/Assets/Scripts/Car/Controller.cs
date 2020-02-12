@@ -22,11 +22,20 @@ namespace OpenRace.Car {
 
         float steeringAngle = 30f;
 
+        Dictionary<Transform, Wheel> wheelScript = new Dictionary<Transform, Wheel>();
+
         [Header("Aerodynamics")]
         public float coefficientOfAirResistance = 0.4f;
         public float frontalSurfaceOfTheCar = 2.5f;
 
-        private void FixedUpdate() {
+        void Start() {
+            wheelScript.Add(wheelL, wheelL.GetComponent<Wheel>());
+            wheelScript.Add(wheelR, wheelR.GetComponent<Wheel>());
+            wheelScript.Add(fwheelL, fwheelL.GetComponent<Wheel>());
+            wheelScript.Add(fwheelR, fwheelR.GetComponent<Wheel>());
+        }
+
+        void FixedUpdate() {
 
             wheelR.Rotate(new Vector3(0, -Input.GetAxis("Vertical"), 0));
             wheelL.Rotate(new Vector3(0, -Input.GetAxis("Vertical"), 0));
@@ -72,20 +81,21 @@ namespace OpenRace.Car {
 
         void Turn(Transform left, Transform right) {
 
-            if(isGrounded(left) && isGrounded(right)) {
-                float angle = Input.GetAxis("Horizontal") * steeringAngle;
+            float angle = Input.GetAxis("Horizontal") * steeringAngle;
 
-                left.localEulerAngles = new Vector3(
+            left.localEulerAngles = new Vector3(
                     left.localEulerAngles.x,
                     angle,
                     left.localEulerAngles.z
                 );
-                right.localEulerAngles = new Vector3(
-                    right.localEulerAngles.x,
-                    angle,
-                    right.localEulerAngles.z
-                );
+            right.localEulerAngles = new Vector3(
+                right.localEulerAngles.x,
+                angle,
+                right.localEulerAngles.z
+            );
 
+            if(isGrounded(left) && isGrounded(right)) {
+                
                 float turn = Mathf.Lerp(angle * 8000, 0, body.velocity.magnitude / maxSpeed / 3f);
 
                 body.MoveRotation(Quaternion.Euler(
@@ -100,7 +110,7 @@ namespace OpenRace.Car {
         }
 
         bool isGrounded(Transform transform) {
-            return Physics.Raycast(transform.position, -Vector3.up, 0.51f);
+            return wheelScript[transform].IsGrounded();
         }
     }
 }

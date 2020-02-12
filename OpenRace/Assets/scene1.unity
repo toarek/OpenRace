@@ -163,7 +163,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 107542505}
   m_LocalRotation: {x: 0, y: 0.24598408, z: 0, w: 0.9692739}
-  m_LocalPosition: {x: 1.59, y: 0.36, z: -2.43}
+  m_LocalPosition: {x: 1.59, y: 1.32, z: -2.43}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 822876320}
@@ -192,6 +192,8 @@ MonoBehaviour:
   text: {fileID: 296644193}
   text1: {fileID: 1915139747}
   maxSpeed: 350
+  coefficientOfAirResistance: 0.4
+  frontalSurfaceOfTheCar: 2.5
 --- !u!1 &185024293
 GameObject:
   m_ObjectHideFlags: 0
@@ -440,7 +442,7 @@ GameObject:
   - component: {fileID: 783229569}
   m_Layer: 0
   m_Name: Terrain
-  m_TagString: Untagged
+  m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967294
@@ -861,6 +863,7 @@ GameObject:
   - component: {fileID: 1071709845}
   - component: {fileID: 1071709844}
   - component: {fileID: 1071709842}
+  - component: {fileID: 1071709843}
   m_Layer: 0
   m_Name: LeftFront
   m_TagString: Untagged
@@ -896,6 +899,18 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1071709843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1071709840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1ff4167bf9ffcb42ad6d217f5181840, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!23 &1071709844
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -955,6 +970,7 @@ GameObject:
   - component: {fileID: 1093759955}
   - component: {fileID: 1093759954}
   - component: {fileID: 1093759956}
+  - component: {fileID: 1093759957}
   m_Layer: 0
   m_Name: RightBack
   m_TagString: Untagged
@@ -1037,6 +1053,18 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1093759957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1093759952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1ff4167bf9ffcb42ad6d217f5181840, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1100845047
 GameObject:
   m_ObjectHideFlags: 0
@@ -1126,6 +1154,7 @@ GameObject:
   - component: {fileID: 1252002457}
   - component: {fileID: 1252002456}
   - component: {fileID: 1252002454}
+  - component: {fileID: 1252002455}
   m_Layer: 0
   m_Name: RightFront
   m_TagString: Untagged
@@ -1161,6 +1190,18 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1252002455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1252002452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1ff4167bf9ffcb42ad6d217f5181840, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!23 &1252002456
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1220,6 +1261,7 @@ GameObject:
   - component: {fileID: 1268482433}
   - component: {fileID: 1268482432}
   - component: {fileID: 1268482434}
+  - component: {fileID: 1268482435}
   m_Layer: 0
   m_Name: LeftBack
   m_TagString: Untagged
@@ -1302,6 +1344,18 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1268482435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1268482430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1ff4167bf9ffcb42ad6d217f5181840, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1494878399
 GameObject:
   m_ObjectHideFlags: 0

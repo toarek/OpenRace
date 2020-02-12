@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Car\Controller.cs" />
     <Compile Include="Assets\Scripts\Car\Test.cs" />
+    <Compile Include="Assets\Scripts\Car\Wheel.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/Arek/Prace/OpenRace/OpenRace/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
