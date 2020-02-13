@@ -1,4 +1,8 @@
-﻿using System.Collections;
+﻿//Copyright 2020 OpenRace
+//License Type: MIT
+//File Authors: Arkadiusz Tołwiński
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,23 +26,14 @@ namespace OpenRace.Car {
 
         float steeringAngle = 30f;
 
-        Dictionary<Transform, Wheel> wheelScript = new Dictionary<Transform, Wheel>();
-
         [Header("Aerodynamics")]
         public float coefficientOfAirResistance = 0.4f;
         public float frontalSurfaceOfTheCar = 2.5f;
 
-        void Start() {
-            wheelScript.Add(wheelL, wheelL.GetComponent<Wheel>());
-            wheelScript.Add(wheelR, wheelR.GetComponent<Wheel>());
-            wheelScript.Add(fwheelL, fwheelL.GetComponent<Wheel>());
-            wheelScript.Add(fwheelR, fwheelR.GetComponent<Wheel>());
-        }
-
         void FixedUpdate() {
 
-            wheelR.Rotate(new Vector3(0, -Input.GetAxis("Vertical"), 0));
-            wheelL.Rotate(new Vector3(0, -Input.GetAxis("Vertical"), 0));
+            //wheelR.Rotate(new Vector3(0, -Input.GetAxis("Vertical"), 0));
+            //wheelL.Rotate(new Vector3(0, -Input.GetAxis("Vertical"), 0));
 
             Wheel(wheelR);
             Wheel(wheelL);
@@ -73,7 +68,7 @@ namespace OpenRace.Car {
 
                     body.AddForceAtPosition(
                         body.transform.forward * 400000f * Input.GetAxis("Vertical") * Time.deltaTime * ppMultiplier,
-                        new Vector3(wheel.position.x, 0, wheel.position.z)
+                        new Vector3(wheel.position.x, wheel.position.y, wheel.position.z)
                     );
                 }
             }
@@ -110,7 +105,7 @@ namespace OpenRace.Car {
         }
 
         bool isGrounded(Transform transform) {
-            return wheelScript[transform].IsGrounded();
+            return Physics.Raycast(transform.position, -transform.right, 0.51f);
         }
     }
 }
