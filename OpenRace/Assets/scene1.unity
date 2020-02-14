@@ -163,7 +163,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 107542505}
   m_LocalRotation: {x: 0, y: 0.24598408, z: 0, w: 0.9692739}
-  m_LocalPosition: {x: 1.59, y: 2.302, z: -2.43}
+  m_LocalPosition: {x: 1.59, y: 0.34, z: -2.43}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 822876320}
@@ -184,16 +184,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 518da15ffc6b6d94a8ef5555033e5077, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wheelR: {fileID: 1093759953}
-  wheelL: {fileID: 1268482431}
-  fwheelR: {fileID: 1252002453}
-  fwheelL: {fileID: 1071709841}
-  body: {fileID: 107542506}
-  text: {fileID: 296644193}
-  text1: {fileID: 1915139747}
+  wheelAxies:
+  - right: {fileID: 1252002453}
+    left: {fileID: 1071709841}
+    steering: 1
+    torque: 0
+    brake: 1
+  - right: {fileID: 1093759953}
+    left: {fileID: 1268482431}
+    steering: 0
+    torque: 1
+    brake: 1
+  carBody: {fileID: 107542506}
   maxSpeed: 350
+  clutchFriction: 0.1
+  brakeFriction: 1
   coefficientOfAirResistance: 0.4
   frontalSurfaceOfTheCar: 2.5
+  text: {fileID: 296644193}
+  text1: {fileID: 1915139747}
 --- !u!1 &163946295
 GameObject:
   m_ObjectHideFlags: 0
@@ -1356,7 +1365,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1071709840}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 8232459147fc55849ac977df0ca06f79, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -1497,7 +1506,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1093759952}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 8232459147fc55849ac977df0ca06f79, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -1714,7 +1723,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1252002452}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 8232459147fc55849ac977df0ca06f79, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -1855,7 +1864,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1268482430}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 8232459147fc55849ac977df0ca06f79, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3

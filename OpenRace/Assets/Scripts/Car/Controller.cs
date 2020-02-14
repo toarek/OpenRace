@@ -8,38 +8,76 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace OpenRace.Car {
+
+    [System.Serializable]
+    public struct WheelAxle {
+        public Transform right;
+        public Transform left;
+
+        public bool steering;
+        public bool torque;
+        public bool brake;
+    }
+
     public class Controller : MonoBehaviour {
-        public Transform wheelR;
-        public Transform wheelL;
-        public Transform fwheelR;
-        public Transform fwheelL;
+        
+        [Header("Wheels")]
+        public List<WheelAxle> wheelAxies = new List<WheelAxle>();
 
-        public Rigidbody body;
+        [Header("Properties")]
+        public Rigidbody carBody;
+        public float maxSpeed = 100f;
+        public float clutchFriction = 0.1f;
+        public float brakeFriction = 1.6f;
 
+        [Header("Aerodynamics")]
+        public float coefficientOfAirResistance = 0.4f;
+        public float frontalSurfaceOfTheCar = 2.5f;
+
+        [Header("Others")]
         public Text text;
         public Text text1;
-
-        public float maxSpeed = 100f;
 
         bool to100 = true;
         float to100Time = 0;
 
         float steeringAngle = 30f;
 
-        [Header("Aerodynamics")]
-        public float coefficientOfAirResistance = 0.4f;
-        public float frontalSurfaceOfTheCar = 2.5f;
+        Dictionary<Transform, MeshCollider> wheelPhysicMaterial = new Dictionary<Transform, MeshCollider>();
+
+        void Start() {
+            for(int i = 0; i < wheelAxies.Count; i++) {
+
+                wheelPhysicMaterial.Add(wheelAxies[i].left, wheelAxies[i].left.GetComponent<MeshCollider>());
+                wheelPhysicMaterial.Add(wheelAxies[i].right, wheelAxies[i].right.GetComponent<MeshCollider>());
+
+                wheelPhysicMaterial[wheelAxies[i].left].material = new PhysicMaterial();
+                wheelPhysicMaterial[wheelAxies[i].right].material = new PhysicMaterial();
+            }
+        }
+
+        void Update() {
+            Brake();
+        }
 
         void FixedUpdate() {
 
             //wheelR.Rotate(new Vector3(0, -Input.GetAxis("Vertical"), 0));
             //wheelL.Rotate(new Vector3(0, -Input.GetAxis("Vertical"), 0));
 
-            Wheel(wheelR);
-            Wheel(wheelL);
-            Turn(fwheelL, fwheelR);
+            for(int i = 0; i < wheelAxies.Count; i++) {
 
-            float speed = body.velocity.magnitude * 3.6f;
+                if(wheelAxies[i].steering) {
+                    Turn(wheelAxies[i].left, wheelAxies[i].right);
+                }
+
+                if(wheelAxies[i].torque) {
+                    Wheel(wheelAxies[i].left);
+                    Wheel(wheelAxies[i].right);
+                }
+            }
+
+            float speed = carBody.velocity.magnitude * 3.6f;
             text.text = "Real Speed: " + Mathf.RoundToInt(speed).ToString();
 
             if(to100) {
@@ -55,19 +93,18 @@ namespace OpenRace.Car {
         void Wheel(Transform wheel) {
             if(isGrounded(wheel)) {
 
-                float speed = body.velocity.magnitude * 3.6f;
+                float speed = carBody.velocity.magnitude * 3.6f;
 
                 if(speed < maxSpeed) {
 
                     float pp = 0.0048f * coefficientOfAirResistance * frontalSurfaceOfTheCar * (speed * speed);
-                    print(pp);
 
                     float ppMultiplier = pp / 1000f;
                     if(ppMultiplier < 1)
                         ppMultiplier = 1;
 
-                    body.AddForceAtPosition(
-                        body.transform.forward * 400000f * Input.GetAxis("Vertical") * Time.deltaTime * ppMultiplier,
+                    carBody.AddForceAtPosition(
+                        carBody.transform.forward * 400000f * Input.GetAxis("Vertical") * Time.deltaTime * ppMultiplier,
                         new Vector3(wheel.position.x, wheel.position.y, wheel.position.z)
                     );
                 }
@@ -91,17 +128,62 @@ namespace OpenRace.Car {
 
             if(isGrounded(left) && isGrounded(right)) {
                 
-                float turn = Mathf.Lerp(angle * 8000, 0, body.velocity.magnitude / maxSpeed / 3f);
+                float turn = Mathf.Lerp(angle * 8000, 0, carBody.velocity.magnitude / maxSpeed / 3f);
 
-                body.MoveRotation(Quaternion.Euler(
-                    body.transform.rotation.eulerAngles.x,
-                    body.transform.rotation.eulerAngles.y + (turn / 5000f * Time.deltaTime),
-                    body.transform.rotation.eulerAngles.z
+                carBody.MoveRotation(Quaternion.Euler(
+                    carBody.transform.rotation.eulerAngles.x,
+                    carBody.transform.rotation.eulerAngles.y + (turn / 5000f * Time.deltaTime),
+                    carBody.transform.rotation.eulerAngles.z
                 ));
 
-                if(body.velocity.magnitude * 3.6f > 15f)
-                    body.velocity = transform.forward * body.velocity.magnitude;
+                print(Vector3.Distance(carBody.velocity.normalized, transform.forward));
+                if(!Input.GetKey(KeyCode.Space)) {
+                    if(carBody.velocity.magnitude * 3.6f > 15f) {
+
+                        if(
+                            Vector3.Distance(carBody.velocity.normalized, transform.forward)
+                            <=
+                            Vector3.Distance(carBody.velocity.normalized, -transform.forward
+                        )) {
+
+                            carBody.velocity = transform.forward * carBody.velocity.magnitude;
+                        } else {
+                            carBody.velocity = -transform.forward * carBody.velocity.magnitude;
+                        }
+
+                    }
+                }
             }
+        }
+
+        void Brake() {
+            if(Input.GetKey(KeyCode.Space)) {
+
+                for(int i = 0; i < wheelAxies.Count; i++) {
+                    if(wheelAxies[i].brake) {
+                        ModifyFriction(wheelAxies[i], brakeFriction);
+                    }
+                }
+            } else {
+
+                for(int i = 0; i < wheelAxies.Count; i++) {
+                    if(wheelAxies[i].brake) {
+                        ModifyFriction(wheelAxies[i], clutchFriction);
+                    }
+                }
+            }
+        }
+
+        void ModifyFriction(WheelAxle axle, float friction) {
+            
+            PhysicMaterial left = wheelPhysicMaterial[axle.left].material;
+            PhysicMaterial right = wheelPhysicMaterial[axle.right].material;
+
+            left.staticFriction = friction;
+            left.dynamicFriction = friction;
+
+            right.staticFriction = friction;
+            right.dynamicFriction = friction;
         }
 
         bool isGrounded(Transform transform) {
