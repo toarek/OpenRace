@@ -136,9 +136,12 @@ namespace OpenRace.Car {
                     carBody.transform.rotation.eulerAngles.z
                 ));
 
-                print(Vector3.Distance(carBody.velocity.normalized, transform.forward));
+                float steering = Mathf.RoundToInt(Vector3.Distance(carBody.velocity.normalized, transform.forward) * 1000f) * 2f;
+                print(steering);
+                print((steering <= steeringAngle + 10));
+
                 if(!Input.GetKey(KeyCode.Space)) {
-                    if(carBody.velocity.magnitude * 3.6f > 15f) {
+                    if(steering <= steeringAngle + 10 || Mathf.RoundToInt(carBody.velocity.magnitude) == 0) {
 
                         if(
                             Vector3.Distance(carBody.velocity.normalized, transform.forward)
